@@ -1,6 +1,9 @@
+# :warning: DISCLAIMER : this is fork of Potree, go [there](https://github.com/potree/potree/) for original version.
 
+# About this Fork
+Small modifications such as point measurement tool duplication to create specific ID measurement.
 
-# About
+# About Potree
 
 * Potree is a free open-source WebGL based point cloud renderer for large point clouds. It is based on the [TU Wien Scanopy project](https://www.cg.tuwien.ac.at/research/projects/Scanopy/) and research projects [Harvest4D](https://harvest4d.org/), [GCD Doctoral College](https://gcd.tuwien.ac.at/) and [Superhumans](https://www.cg.tuwien.ac.at/research/projects/Superhumans/).
 * Newest information and work in progress is usually available on [twitter](https://twitter.com/m_schuetz)
