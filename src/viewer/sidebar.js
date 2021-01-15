@@ -105,7 +105,7 @@ export class Sidebar{
 			}
 		));
 		
-		// CUSTOMIZED POINT PICKER
+		// CUSTOMIZED POINT ID
 		elToolbar.append(this.createToolIcon(
 			Potree.resourcePath + '/icons/custom_point.svg',
 			'[title]tt.point_measurement',
@@ -114,11 +114,12 @@ export class Sidebar{
 				let measurement = this.measuringTool.startInsertion({
 					showDistances: false,
 					showAngles: false,
-					showCoordinates: true,
+					showCoordinates: false,
+					showId: true,
 					showArea: false,
 					closed: true,
 					maxMarkers: 1,
-					name: 'Custom Point'});
+					name: 'Point ID'});
 				
 
 				let measurementsRoot = $("#jstree_scene").jstree().get_json("measurements");

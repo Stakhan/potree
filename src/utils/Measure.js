@@ -304,6 +304,7 @@ export class Measure extends THREE.Object3D {
 		this.edgeLabels = [];
 		this.angleLabels = [];
 		this.coordinateLabels = [];
+		this.idLabels = [];
 
 		this.heightEdge = createHeightLine();
 		this.heightLabel = createHeightLabel();
@@ -407,6 +408,18 @@ export class Measure extends THREE.Object3D {
 			coordinateLabel.visible = false;
 			this.coordinateLabels.push(coordinateLabel);
 			this.add(coordinateLabel);
+		}
+
+		{ // id labels
+			let idLabel = new TextSprite();
+			idLabel.setBorderColor({r: 0, g: 0, b: 0, a: 1.0});
+			idLabel.setBackgroundColor({r: 0, g: 0, b: 0, a: 1.0});
+			idLabel.fontsize = 16;
+			idLabel.material.depthTest = false;
+			idLabel.material.opacity = 1;
+			idLabel.visible = false;
+			this.idLabels.push(idLabel);
+			this.add(idLabel);
 		}
 
 		{ // Event Listeners
@@ -606,6 +619,20 @@ export class Measure extends THREE.Object3D {
 				coordinateLabel.setText(msg);
 
 				coordinateLabel.visible = this.showCoordinates;
+			}
+
+			{ // id labels
+				let idLabel = this.idLabels[0];
+				let msg = "ID: "
+				if (point.hasOwnProperty('return number')){
+					msg += point["return number"].toString();
+				}
+				if (point.hasOwnProperty('return number')){
+					msg += ', '+point["GpsTime"].toString();
+				}
+				idLabel.setText(msg);
+
+				idLabel.visible = this.showId;
 			}
 
 			return;

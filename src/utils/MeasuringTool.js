@@ -188,6 +188,7 @@ export class MeasuringTool extends EventDispatcher{
 		measure.showArea = pick(args.showArea, false);
 		measure.showAngles = pick(args.showAngles, false);
 		measure.showCoordinates = pick(args.showCoordinates, false);
+		measure.showId = pick(args.showId, false);
 		measure.showHeight = pick(args.showHeight, false);
 		measure.showCircle = pick(args.showCircle, false);
 		measure.showAzimuth = pick(args.showAzimuth, false);
@@ -285,6 +286,36 @@ export class MeasuringTool extends EventDispatcher{
 			// coordinate labels
 			for (let j = 0; j < measure.coordinateLabels.length; j++) {
 				let label = measure.coordinateLabels[j];
+				let sphere = measure.spheres[j];
+
+				let distance = camera.position.distanceTo(sphere.getWorldPosition(new THREE.Vector3()));
+
+				let screenPos = sphere.getWorldPosition(new THREE.Vector3()).clone().project(camera);
+				screenPos.x = Math.round((screenPos.x + 1) * clientWidth / 2);
+				screenPos.y = Math.round((-screenPos.y + 1) * clientHeight / 2);
+				screenPos.z = 0;
+				screenPos.y -= 30;
+
+				let labelPos = new THREE.Vector3( 
+					(screenPos.x / clientWidth) * 2 - 1, 
+					-(screenPos.y / clientHeight) * 2 + 1, 
+					0.5 );
+				labelPos.unproject(camera);
+				if(this.viewer.scene.cameraMode == CameraMode.PERSPECTIVE) {
+					let direction = labelPos.sub(camera.position).normalize();
+					labelPos = new THREE.Vector3().addVectors(
+						camera.position, direction.multiplyScalar(distance));
+
+				}
+				label.position.copy(labelPos);
+				let pr = Utils.projectedRadius(1, camera, distance, clientWidth, clientHeight);
+				let scale = (70 / pr);
+				label.scale.set(scale, scale, scale);
+			}
+
+			// id labels
+			for (let j = 0; j < measure.idLabels.length; j++) {
+				let label = measure.idLabels[j];
 				let sphere = measure.spheres[j];
 
 				let distance = camera.position.distanceTo(sphere.getWorldPosition(new THREE.Vector3()));
