@@ -1,4 +1,4 @@
-# :warning: DISCLAIMER : this is fork of Potree, original version is [here](https://github.com/potree/potree/).
+# :warning: DISCLAIMER : this is a fork of Potree, original version is [here](https://github.com/potree/potree/).
 
 # About this Fork
 Small modifications such as point measurement tool duplication to create specific ID measurement.
