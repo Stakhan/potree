@@ -29,6 +29,7 @@
 	<script src="../libs/jstree/jstree.js"></script>
 	<script src="../build/potree/potree.js"></script>
 	<script src="../libs/plasio/js/laslaz.js"></script>
+	<script src="../src/capi/capi.js"></script>
 	
 	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
 	<!-- INCLUDE SETTINGS HERE -->
@@ -42,6 +43,8 @@
 	
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
 		
+		//api = new C_API("ws://127.0.0.1:1234", window.viewer);
+
 		viewer.setEDLEnabled(false);
 		viewer.setFOV(60);
 		viewer.setPointBudget(1*1000*1000);
@@ -55,7 +58,7 @@
 			//viewer.toggleSidebar();
 		});
 		
-		// Lion
+		// Test data
 		let url = "test/metadata.json";
 		Potree.loadPointCloud(url).then(e => {
         let pointcloud = e.pointcloud;

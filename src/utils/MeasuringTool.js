@@ -198,6 +198,7 @@ export class MeasuringTool extends EventDispatcher{
 
 		measure.name = args.name || 'Measurement';
 
+		this.cleanPointIDChildrens();
 		this.scene.add(measure);
 
 		let cancel = {
@@ -237,8 +238,9 @@ export class MeasuringTool extends EventDispatcher{
 		this.viewer.inputHandler.startDragging(
 			measure.spheres[measure.spheres.length - 1]);
 
+		this.cleanPointIDMeasurements();
 		this.viewer.scene.addMeasurement(measure);
-
+		
 		return measure;
 	}
 	
@@ -441,6 +443,30 @@ export class MeasuringTool extends EventDispatcher{
 					label.visible = false;
 				}
 			}
+		}
+	}
+
+	isSingleMeasurement(test_measure){
+		this.viewer.scene.measurements.forEach(function (measure){
+			if (test_measure.name === measure.name){
+				return false
+			}
+		})
+		return true
+	}
+
+	cleanPointIDMeasurements(){
+
+		this.viewer.scene.measurements = this.viewer.scene.measurements.filter(function(value, index, arr){ 
+        	return value.name == 'Point ID';
+    	});
+	}
+
+	cleanPointIDChildrens(){
+		if (this.scene.childrens !== null){
+			this.scene.childrens = this.scene.childrens.filter(function(value, index, arr){ 
+				return value.name !== 'Point ID';
+			});
 		}
 	}
 
