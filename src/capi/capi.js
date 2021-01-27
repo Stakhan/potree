@@ -1,16 +1,20 @@
 var Server = require('simple-websocket/server')
 
-class C_API{
+export class C_API{
 
 	constructor(url, viewer){
-		this.socket = new Server({ port: 1111 })
+		this.socket = new Server({ url: url, port: 1111 })
 		this.viewer = viewer
 
-		server.on('connection', function (this) {
-			//ADD EventListener for 'poin_selected" and call sendId
+		this.socket.on('connection', function (this) {
+			console.log('connection opened')
 			this.socket.on('initialize_point_picking', initPointPicking)
 
+			this.viewer.measuringTools.addEventListener('point_selected', this.sendId)
+
 		})
+
+		console.log('C_API ready')
 
 	}
 
@@ -18,8 +22,10 @@ class C_API{
 		console.log('supposed to init')
 	}
 	
-	sendId(return_nb, gps_t){
-		this.socket.write({ return_number: return_nb, gps_time: gps_t })
+	sendId(event){
+		console.log(event.measure.points[0]["return_number"])
+		console.log(event.measure.points[0]["GpsTime"])
+		this.socket.write({ return_number: event.measure.points[0]["return_number"], gps_time: event.measure.points[0]["GpsTime"] })
 	}
 
 

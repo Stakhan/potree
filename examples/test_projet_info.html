@@ -29,7 +29,7 @@
 	<script src="../libs/jstree/jstree.js"></script>
 	<script src="../build/potree/potree.js"></script>
 	<script src="../libs/plasio/js/laslaz.js"></script>
-	<script src="../src/capi/capi.js"></script>
+	<script type="module" src="../src/capi.js"></script>
 	
 	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
 	<!-- INCLUDE SETTINGS HERE -->
@@ -43,7 +43,7 @@
 	
 		window.viewer = new Potree.Viewer(document.getElementById("potree_render_area"));
 		
-		//api = new C_API("ws://127.0.0.1:1234", window.viewer);
+		api = new C_API("ws://127.0.0.1:1234", window.viewer);
 
 		viewer.setEDLEnabled(false);
 		viewer.setFOV(60);
