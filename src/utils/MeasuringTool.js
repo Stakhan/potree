@@ -241,6 +241,13 @@ export class MeasuringTool extends EventDispatcher{
 		this.cleanPointIDMeasurements();
 		this.viewer.scene.addMeasurement(measure);
 		
+		if (measure.name == 'Point ID'){
+			this.dispatchEvent({
+				type: 'point_selected',
+				measure: measure
+			});
+		}
+
 		return measure;
 	}
 	
@@ -455,8 +462,8 @@ export class MeasuringTool extends EventDispatcher{
 	}
 
 	cleanPointIDChildrens(){
-		if (this.scene.childrens !== null){
-			this.scene.childrens = this.scene.childrens.filter(function(value, index, arr){ 
+		if (this.scene.children !== "undefined"){
+			this.scene.children = this.scene.children.filter(function(value, index, arr){ 
 				return value.name !== 'Point ID';
 			});
 		}
