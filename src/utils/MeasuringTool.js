@@ -446,14 +446,6 @@ export class MeasuringTool extends EventDispatcher{
 		}
 	}
 
-	isSingleMeasurement(test_measure){
-		this.viewer.scene.measurements.forEach(function (measure){
-			if (test_measure.name === measure.name){
-				return false
-			}
-		})
-		return true
-	}
 
 	cleanPointIDMeasurements(){
 
