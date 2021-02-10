@@ -1,32 +1,52 @@
-var Server = require('simple-websocket/server')
 
-export class C_API{
+class C_API{
 
-	constructor(url, viewer){
-		this.socket = new Server({ url: url, port: 1111 })
-		this.viewer = viewer
+	constructor (viewer_obj, host='localhost', port='1111') {
+		this.viewer = viewer_obj
+		this.socket = new WebSocket('ws://'+host+':'+port)
 
-		this.socket.on('connection', function (this) {
-			console.log('connection opened')
-			this.socket.on('initialize_point_picking', initPointPicking)
-
-			this.viewer.measuringTools.addEventListener('point_selected', this.sendId)
-
-		})
-
-		console.log('C_API ready')
+		this.socket.onopen = this.onOpen.bind(this)
 
 	}
 
-	initPointPicking(){
+	initPointPicking () {
 		console.log('supposed to init')
 	}
 	
-	sendId(event){
-		console.log(event.measure.points[0]["return_number"])
-		console.log(event.measure.points[0]["GpsTime"])
-		this.socket.write({ return_number: event.measure.points[0]["return_number"], gps_time: event.measure.points[0]["GpsTime"] })
+	sendId (e) {
+		console.log(e.measure.points[0]["return_number"])
+		console.log(e.measure.points[0]["GpsTime"])
+		var content = { return_number: e.measure.points[0]["return_number"], gps_time: e.measure.points[0]["GpsTime"] }
+		this.socket.send(this.formatMessage("selected_point", content))
+		console.debug('ID sent')
 	}
 
+	onOpen (e) {		
+			console.debug('connection opened')
+			// Messages from Server
+			this.socket.onmessage = this.onMessage.bind(this)
+
+			// Messages to Server
+			this.viewer.measuringTool.addEventListener('point_selected', this.sendId.bind(this))
+			console.debug('--> C_API ready! B) <--')	
+	}
+
+	onMessage (e) {
+				
+				if (e.data.type.includes('init_point_picking')){
+					this.initPointPicking()
+				}
+				if(e.data.type.includes('classified_point')){
+					this.onClassifiedPoint()
+				}
+	}
+
+	formatMessage (type, content) {
+		return JSON.stringify({"type":type, "content":content})
+	}
+
+	onClassifiedPoint () {
+		return null
+	}
 
 }
