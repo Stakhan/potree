@@ -108,7 +108,7 @@ export class Sidebar{
 		// CUSTOMIZED POINT ID
 		elToolbar.append(this.createToolIcon(
 			Potree.resourcePath + '/icons/custom_point.svg',
-			'[title]tt.point_measurement',
+			'[title]tt.point_id_measurement',
 			() => {
 				$('#menu_measurements').next().slideDown();
 				let measurement = this.measuringTool.startInsertion({

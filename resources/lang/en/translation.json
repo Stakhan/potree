@@ -16,6 +16,7 @@
 	"tt": {
 		"angle_measurement": "Angle measurement",
 		"point_measurement": "Point measurement",
+		"point_id_measurement": "Point ID measurement",
 		"distance_measurement": "Distance measurement",
 		"height_measurement": "Height measurement",
 		"circle_measurement": "Circle measurement",

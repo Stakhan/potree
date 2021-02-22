@@ -10,15 +10,26 @@ class C_API{
 	}
 
 	initPointPicking () {
-		console.log('supposed to init')
+		// var clickEvent  = document.createEvent('MouseEvents')
+		// clickEvent.initEvent('click', true, true)
+		//document.getElementsByClassName('potree_menu_toggle')[0].click()
+		//document.getElementById('menu_tools').click()
+		document.querySelector('[title="Point ID measurement"]').click()
 	}
 	
 	sendId (e) {
-		console.log(e.measure.points[0]["return_number"])
-		console.log(e.measure.points[0]["GpsTime"])
-		var content = { return_number: e.measure.points[0]["return_number"], gps_time: e.measure.points[0]["GpsTime"] }
-		this.socket.send(this.formatMessage("selected_point", content))
-		console.debug('ID sent')
+		var point = e.measure.points[0]
+		if (typeof point["return_number"] !== "undefined" && point["GpsTime"] !== "undefined") {
+			console.log(e.measure.points[0]["return_number"])
+			console.log(e.measure.points[0]["GpsTime"])
+			var content = { return_number: e.measure.points[0]["return_number"], gps_time: e.measure.points[0]["GpsTime"] }
+			this.socket.send(this.formatMessage("selected_point", content))
+			console.debug('ID sent')
+		}
+		else {
+			this.viewer.postMessage("Point Cloud doesn't fit requirement of having 'GpsTime' and 'return_number' attributes.")
+			console.debug('ID not sent')
+		}
 	}
 
 	onOpen (e) {		
@@ -43,10 +54,6 @@ class C_API{
 
 	formatMessage (type, content) {
 		return JSON.stringify({"type":type, "content":content})
-	}
-
-	onClassifiedPoint () {
-		return null
 	}
 
 }
