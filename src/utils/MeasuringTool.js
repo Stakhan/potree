@@ -209,7 +209,14 @@ export class MeasuringTool extends EventDispatcher{
 		let insertionCallback = (e) => {
 			if (e.button === THREE.MOUSE.LEFT) {
 				measure.addMarker(measure.points[measure.points.length - 1].position.clone());
-
+				if (measure.name == 'Point ID'){
+					this.dispatchEvent({
+						type: 'point_selected',
+						measure: measure
+					});
+					cancel.callback();
+				}
+				console.debug('measure.points.length:'+measure.points.length.toString()+ ', measure.maxMarkers:' + measure.maxMarkers.toString()+(measure.points.length >= measure.maxMarkers).toString())
 				if (measure.points.length >= measure.maxMarkers) {
 					cancel.callback();
 				}
@@ -229,6 +236,30 @@ export class MeasuringTool extends EventDispatcher{
 			this.viewer.removeEventListener('cancel_insertions', cancel.callback);
 		};
 
+		let pointIDCallback = (e) => {
+			if (e.button === THREE.MOUSE.LEFT) {
+					
+				this.dispatchEvent({
+					type: 'point_selected',
+					measure: measure
+				});
+				pointIDStop();	
+			}
+		}
+		let pointIDStop = (e) => { 
+			domElement.removeEventListener('mouseup', pointIDCallback, true);
+			domElement.addEventListener('mouseup', pointIDCancel, true);
+		}
+		let pointIDCancel = (e) => {
+			if (e.button === THREE.MOUSE.RIGHT) {
+				this.viewer.scene.removeAllMeasurements();
+			}
+		}
+
+		if (measure.name == 'Point ID') {
+			domElement.addEventListener('mouseup', pointIDCallback, true);
+		}
+
 		if (measure.maxMarkers > 1) {
 			this.viewer.addEventListener('cancel_insertions', cancel.callback);
 			domElement.addEventListener('mouseup', insertionCallback, true);
@@ -241,12 +272,6 @@ export class MeasuringTool extends EventDispatcher{
 		this.cleanPointIDMeasurements();
 		this.viewer.scene.addMeasurement(measure);
 		
-		if (measure.name == 'Point ID'){
-			this.dispatchEvent({
-				type: 'point_selected',
-				measure: measure
-			});
-		}
 
 		return measure;
 	}

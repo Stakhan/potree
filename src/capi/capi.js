@@ -10,19 +10,15 @@ class C_API{
 	}
 
 	initPointPicking () {
-		// var clickEvent  = document.createEvent('MouseEvents')
-		// clickEvent.initEvent('click', true, true)
-		//document.getElementsByClassName('potree_menu_toggle')[0].click()
-		//document.getElementById('menu_tools').click()
 		document.querySelector('[title="Point ID measurement"]').click()
 	}
 	
 	sendId (e) {
 		var point = e.measure.points[0]
-		if (typeof point["return_number"] !== "undefined" && point["GpsTime"] !== "undefined") {
-			console.log(e.measure.points[0]["return_number"])
-			console.log(e.measure.points[0]["GpsTime"])
-			var content = { return_number: e.measure.points[0]["return_number"], gps_time: e.measure.points[0]["GpsTime"] }
+		if (typeof point["return number"] !== "undefined" && point["gps-time"] !== "undefined") {
+			console.log(point["return number"])
+			console.log(point["gps-time"])
+			var content = { return_number: point["return number"], gps_time: point["gps-time"] }
 			this.socket.send(this.formatMessage("selected_point", content))
 			console.debug('ID sent')
 		}
