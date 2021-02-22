@@ -209,14 +209,7 @@ export class MeasuringTool extends EventDispatcher{
 		let insertionCallback = (e) => {
 			if (e.button === THREE.MOUSE.LEFT) {
 				measure.addMarker(measure.points[measure.points.length - 1].position.clone());
-				if (measure.name == 'Point ID'){
-					this.dispatchEvent({
-						type: 'point_selected',
-						measure: measure
-					});
-					cancel.callback();
-				}
-				console.debug('measure.points.length:'+measure.points.length.toString()+ ', measure.maxMarkers:' + measure.maxMarkers.toString()+(measure.points.length >= measure.maxMarkers).toString())
+				
 				if (measure.points.length >= measure.maxMarkers) {
 					cancel.callback();
 				}
