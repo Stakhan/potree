@@ -624,11 +624,12 @@ export class Measure extends THREE.Object3D {
 			{ // id labels
 				let idLabel = this.idLabels[0];
 				let msg = "ID: "
-				if (point.hasOwnProperty('return number')){
+				if (point.hasOwnProperty('return number') && point.hasOwnProperty('GpsTime')){
 					msg += point["return number"].toString();
-				}
-				if (point.hasOwnProperty('return number')){
 					msg += ', '+point["GpsTime"].toString();
+				}
+				else {
+					msg += 'None'
 				}
 				idLabel.setText(msg);
 
