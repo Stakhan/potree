@@ -1,5 +1,5 @@
 
-class C_API{
+class mdInfinityAPI{
 
 	constructor (viewer_obj, host='localhost', port='1111') {
 		this.viewer = viewer_obj

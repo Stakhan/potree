@@ -29,11 +29,10 @@
 	<script src="../libs/jstree/jstree.js"></script>
 	<script src="../build/potree/potree.js"></script>
 	<script src="../libs/plasio/js/laslaz.js"></script>
-	<script src="../src/capi/capi.js"></script>
+	<script src="../src/extensions/mdInfinityAPI.js"></script>
 	
 	<!-- INCLUDE ADDITIONAL DEPENDENCIES HERE -->
 	<!-- INCLUDE SETTINGS HERE -->
-	<div id="test output"></div>
 	<div class="potree_container" style="position: absolute; width: 100%; height: 100%; left: 0px; top: 0px; ">
 		<div id="potree_render_area" style="background-image: url('../build/potree/resources/images/background.jpg');"></div>
 		<div id="potree_sidebar_container"> </div>
@@ -70,7 +69,7 @@
         viewer.fitToScreen();
 		});
 
-		api = new C_API(viewer);
+		api = new mdInfinityAPI(viewer);
 
 		
 	</script>
