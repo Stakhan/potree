@@ -2,6 +2,8 @@
 class mdInfinityAPI{
 	/**
 	 * This class enables to manage a websocket connection to C++ software.
+	 *
+	 * It's entry point to a living instance of Potree is a Viewer object.
 	 */
 	constructor (viewer_obj, host='localhost', port='1111') {
 		this.viewer = viewer_obj
