@@ -1,0 +1,56 @@
+info:
+  title: mdInfinity API
+  version: '1.0.0'
+  description: |
+    the mdInfinity Potree API allows you to remotely control a specific version of the Potree pointcloud viewer.
+    It is a synchronous API, which means that client and server do play similar roles.
+    For clarity, messages sent by the server have been distinguished from those sent by the client. 😎
+
+server:
+  url: localhost:{port}
+  protocol: websockets
+  variables:
+    port:
+      default: '1111'
+
+client:
+  url: localhost:{port}
+  protocol: http
+  variables:
+    port:
+      default: '1234'
+
+defaultContentType: application/json
+
+
+clientMessages:
+  type:
+    selected_point:
+      contentType: json
+      content:
+        return_number:
+          contentType: Int64
+          description: return number of the emitted LiDAR signal
+        gps_time:
+          contentType: Float32
+          description: the precise GPS time at which LiDAR signal was emitted
+    
+serverMessages:
+  type:
+    init_point_picking:
+      contentType: json
+      content: None
+    classified_point:
+      contentType: json
+      content:
+        return_number:
+          contentType: Int64
+          description: return number of the emitted LiDAR signal
+        gps_time:
+          contentType: Float32
+          description: the precise GPS time at which LiDAR signal was emitted
+        classification:
+          contentType: Int64
+          description: the class to which the point belongs
+
+  
